@@ -1,0 +1,44 @@
+{
+  "name": "react-infscroll",
+  "version": "1.0.0",
+  "description": "React Infinite Scrolling Component",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --compilers js:babel/register -r ./test/support/env -R spec --recursive ./test",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers js:babel/register -r ./test/support/env -R spec --recursive ./test",
+    "test-travis": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- --compilers js:babel/register -r ./test/support/env -R spec --recursive ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexcurtis/react-infscroll.git"
+  },
+  "keywords": [
+    "react",
+    "infinite",
+    "scroll"
+  ],
+  "author": "Alex Curtis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexcurtis/react-infscroll/issues"
+  },
+  "homepage": "https://github.com/alexcurtis/react-infscroll#readme",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.1",
+    "chai": "^3.2.0",
+    "del": "^2.0.2",
+    "eslint-plugin-react": "^3.3.2",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-eslint": "^1.0.0",
+    "istanbul": "^0.3.19",
+    "mocha": "^2.3.2",
+    "sinon": "^1.16.1",
+    "sinon-chai": "^2.8.0"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "react": "^0.13.3"
+  }
+}
