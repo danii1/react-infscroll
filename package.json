@@ -4,7 +4,9 @@
   "description": "React Infinite Scrolling Component",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --compilers js:babel/register -r ./test/support/env -R spec --recursive ./test",
+    "postinstall": "npm run build-lib",
+    "build-lib": "./node_modules/.bin/gulp build",
+    "test": "./node_modules/.bin/karma start karma.conf.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers js:babel/register -r ./test/support/env -R spec --recursive ./test",
     "test-travis": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- --compilers js:babel/register -r ./test/support/env -R spec --recursive ./test"
   },
@@ -25,7 +27,9 @@
   "homepage": "https://github.com/alexcurtis/react-infscroll#readme",
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
     "babel-eslint": "^4.1.1",
+    "babel-loader": "^5.3.2",
     "chai": "^3.2.0",
     "del": "^2.0.2",
     "eslint-plugin-react": "^3.3.2",
@@ -33,9 +37,19 @@
     "gulp-babel": "^5.2.1",
     "gulp-eslint": "^1.0.0",
     "istanbul": "^0.3.19",
+    "istanbul-instrumenter-loader": "^0.1.3",
+    "karma": "^0.13.9",
+    "karma-babel-preprocessor": "^5.2.2",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-coverage": "^0.5.2",
+    "karma-mocha": "^0.2.0",
+    "karma-sourcemap-loader": "^0.3.5",
+    "karma-spec-reporter": "0.0.20",
+    "karma-webpack": "^1.7.0",
     "mocha": "^2.3.2",
     "sinon": "^1.16.1",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "webpack": "^1.12.2"
   },
   "dependencies": {
     "lodash": "^3.10.1",

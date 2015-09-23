@@ -144,7 +144,7 @@ rules:
     wrap-iife: 0
     wrap-regex: 0
     yoda: [2, 'never']
-    react/jsx-quotes: 1
+    jsx-quotes: 1
     react/jsx-no-undef: 1
     react/jsx-uses-react: 1
     react/jsx-uses-vars: 1

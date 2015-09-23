@@ -2,12 +2,13 @@
 
 'use strict';
 
-// const sinon = require('sinon');
-// const InfScroll = require(global.__srcPath + '/infscroll');
+const React = require('react/addons');
+const TestUtils = React.addons.TestUtils;
+const InfScroll = require('../../src/infscroll');
 
-describe('children map', () => {
-    it('should return an empty array if there are no children', () => {
-        'test'.should.equal('test');
+describe('infscroll', () => {
+    it('should not have a loading state upon initialisation', () => {
+        const infScroll = TestUtils.renderIntoDocument(<InfScroll/>);
+        infScroll.state.isLoading.should.be.false;
     });
 });
-
