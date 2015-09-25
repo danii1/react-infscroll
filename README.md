@@ -1,2 +1,4 @@
 # react-infscroll
-React Infinite Scrolling Component
+React Component Based Infinite Scroller
+
+Work In Progress...
