@@ -60,6 +60,22 @@ describe('infscroll', () => {
         window.removeEventListener.should.be.calledWith('resize', infScroll._onScroll);
     });
 
+    it('should not rewatch if the props change but throttle has not changed', () => {
+        const throttle = 250;
+        const infScroll = TestUtils.renderIntoDocument(<InfScroll throttle={throttle}/>);
+        const watch = infScroll.watch = sinon.spy();
+        infScroll.componentWillReceiveProps({ throttle: throttle });
+        watch.should.not.be.called;
+    });
+
+    it('should rewatch if the props change and throttle has changed', () => {
+        const throttle = 250;
+        const infScroll = TestUtils.renderIntoDocument(<InfScroll throttle={throttle}/>);
+        const watch = infScroll.watch = sinon.spy();
+        infScroll.componentWillReceiveProps({ throttle: throttle + 250 });
+        watch.should.be.called;
+    });
+
     it('should asynchronously invoke onScroll once via the throttled scroll handler', (done) => {
         const infScroll = TestUtils.renderIntoDocument(<InfScroll throttle={250}/>);
         const onScroll = infScroll.onScroll = done;
