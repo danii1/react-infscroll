@@ -7,6 +7,7 @@ class InfiniteScroll extends React.Component {
     constructor(props) {
         super(props);
         this.state = { isLoading: false };
+        this.watch();
     }
     componentDidMount(){
         this._listen();
@@ -17,16 +18,20 @@ class InfiniteScroll extends React.Component {
     componentWillReceiveProps(nextProps){
         const throttle = nextProps.throttle;
         if(this.props.throttle === throttle){ return; }
-        this._unlisten();
-        this._listen(throttle);
+        this.watch(throttle);
+    }
+    watch(throttle){
+        throttle = throttle || this.props.throttle;
+        if(throttle === 0){ this._onScroll = this.onScroll.bind(this); }
+        else { this._onScroll = _.throttle(() => this.onScroll(), throttle); }
     }
     _listen(throttle){
-        throttle = throttle || this.props.throttle;
-        this._scrollHandler = _.throttle(() => this.onScroll(), throttle);
-        window.addEventListener('resize', this._scrollHandler);
+        window.addEventListener('resize', this._onScroll);
+        window.addEventListener('load', this._onScroll);
     }
     _unlisten(){
-        window.removeEventListener('resize', this._scrollHandler);
+        window.removeEventListener('resize', this._onScroll);
+        window.removeEventListener('load', this._onScroll);
     }
     onScroll(){
         let props = this.props;
@@ -41,18 +46,33 @@ class InfiniteScroll extends React.Component {
         return this.state.isLoading ? this.props.loadingEl : '';
     }
     render(){
+        const style = this._styles();
         return (
-            <div style={this.props.style} onScroll={this._scrollHandler}>
+            <div style={style} onScroll={this._onScroll} ref="scroller">
                 {this.props.children}
                 {this.renderLoading()}
             </div>
         );
     }
+    _styles(){
+        const style = this.props.style || {};
+        const scroll = this._scrollStyle();
+        const styles = _.extend({}, scroll, style);
+        return styles;
+    }
+    _scrollStyle(){
+        return {
+            overflow: this.props.overflow,
+            height: this.props.height
+        }    
+    }
 }
 
 InfiniteScroll.propTypes = {
-    canGetNext: React.PropTypes.bool.isRequired,
-    getNext: React.PropTypes.func.isRequired,
+    canGetNext: React.PropTypes.bool,
+    getNext: React.PropTypes.func,
+    height: React.PropTypes.number,
+    overflow: React.PropTypes.string,
     threshold: React.PropTypes.number,
     throttle: React.PropTypes.number,
     loadingEl: React.PropTypes.element,
@@ -62,11 +82,9 @@ InfiniteScroll.propTypes = {
 
 InfiniteScroll.defaultProps = {
     threshold: 1000,
-    throttle: 250,
-    style: {
-        overflow: 'auto',
-        height: '500px'
-    }
+    throttle: 0,
+    height: 500,
+    overflow: 'auto'
 };
 
 export default InfiniteScroll;
