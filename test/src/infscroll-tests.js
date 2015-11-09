@@ -3,8 +3,9 @@
 'use strict';
 
 const sinon = require('sinon');
-const React = require('react/addons');
-const TestUtils = React.addons.TestUtils;
+const React = require('react');
+const ReactDOM = require('react-dom');
+const TestUtils = require('react-addons-test-utils');
 const InfScroll = require('../../src/infscroll');
 
 const createTestScrollable = function(options){
@@ -27,7 +28,7 @@ const createDomElement = function(){
 };
 
 const removeDomElement = function(element){
-    React.unmountComponentAtNode(element);
+    ReactDOM.unmountComponentAtNode(element);
     element.remove();
 };
 
@@ -100,14 +101,14 @@ describe('infscroll', () => {
         const getNext = sinon.spy();
         const threshold = 100;
         const el = createDomElement();
-        var infScroll = React.render(createTestScrollable({
+        var infScroll = ReactDOM.render(createTestScrollable({
             getNext: getNext,
             canGetNext: true,
             threshold: threshold,
             height: 100,
             contentHeight: 900
         }), el);
-        const node = React.findDOMNode(infScroll);
+        const node = ReactDOM.findDOMNode(infScroll);
         node.scrollTop = 825;
         TestUtils.Simulate.scroll(node, { target: node });
         removeDomElement(el);
@@ -118,14 +119,14 @@ describe('infscroll', () => {
         const getNext = sinon.spy();
         const threshold = 100;
         const el = createDomElement();
-        var infScroll = React.render(createTestScrollable({
+        var infScroll = ReactDOM.render(createTestScrollable({
             getNext: getNext,
             canGetNext: true,
             threshold: threshold,
             height: 100,
             contentHeight: 900
         }), el);
-        const node = React.findDOMNode(infScroll);
+        const node = ReactDOM.findDOMNode(infScroll);
         node.scrollTop = 25;
         TestUtils.Simulate.scroll(node, { target: node });
         removeDomElement(el);
@@ -140,14 +141,14 @@ describe('infscroll', () => {
             overflow: overflow
         }));
         const scroller = infScroll.refs.scroller;
-        scroller.props.style.height.should.equal(height);
-        scroller.props.style.overflow.should.equal(overflow);
+        scroller.style.height.should.equal(height + 'px');
+        scroller.style.overflow.should.equal(overflow);
     });
 
     it('should set overflow as auto by default', () => {
         const infScroll = TestUtils.renderIntoDocument(<InfScroll/>);
         const scroller = infScroll.refs.scroller;
-        scroller.props.style.overflow.should.equal('auto');
+        scroller.style.overflow.should.equal('auto');
     });
 
     it('should render children', () => {
@@ -197,8 +198,8 @@ describe('infscroll', () => {
             />
         );
         const scroller = infScroll.refs.scroller;
-        scroller.props.style.overflow.should.equal(overflow);
-        scroller.props.style.height.should.equal(height);
+        scroller.style.overflow.should.equal(overflow);
+        scroller.style.height.should.equal(height + 'px');
     });
 
     it('should not overwrite the overflow and height within the style context if already explicitly set', () => {
@@ -213,7 +214,7 @@ describe('infscroll', () => {
             />
         );
         const scroller = infScroll.refs.scroller;
-        scroller.props.style.overflow.should.equal(styles.overflow);
-        scroller.props.style.height.should.equal(styles.height);
+        scroller.style.overflow.should.equal(styles.overflow);
+        scroller.style.height.should.equal(styles.height + 'px');
     });
 });

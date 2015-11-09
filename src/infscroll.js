@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+const ReactDOM = require('react-dom');
 import _ from 'lodash';
 
 class InfiniteScroll extends React.Component {
@@ -36,7 +37,7 @@ class InfiniteScroll extends React.Component {
     onScroll(){
         let props = this.props;
         if(!props.canGetNext || this.state.isLoading){ return; }
-        let el = React.findDOMNode(this);
+        let el = ReactDOM.findDOMNode(this);
         let offset = el.scrollTop + el.offsetHeight;
         if(offset + props.threshold < el.scrollHeight){ return; }
         this.setState({ isLoading: true });
@@ -64,7 +65,7 @@ class InfiniteScroll extends React.Component {
         return {
             overflow: this.props.overflow,
             height: this.props.height
-        }    
+        }
     }
 }
 
