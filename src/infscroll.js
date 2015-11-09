@@ -26,7 +26,7 @@ class InfiniteScroll extends React.Component {
         if(throttle === 0){ this._onScroll = this.onScroll.bind(this); }
         else { this._onScroll = _.throttle(() => this.onScroll(), throttle); }
     }
-    _listen(throttle){
+    _listen(){
         window.addEventListener('resize', this._onScroll);
         window.addEventListener('load', this._onScroll);
     }
@@ -65,7 +65,7 @@ class InfiniteScroll extends React.Component {
         return {
             overflow: this.props.overflow,
             height: this.props.height
-        }
+        };
     }
 }
 

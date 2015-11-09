@@ -79,7 +79,7 @@ describe('infscroll', () => {
 
     it('should asynchronously invoke onScroll once via the throttled scroll handler', (done) => {
         const infScroll = TestUtils.renderIntoDocument(<InfScroll throttle={250}/>);
-        const onScroll = infScroll.onScroll = done;
+        infScroll.onScroll = done;
         infScroll._onScroll();
     });
 
@@ -152,7 +152,7 @@ describe('infscroll', () => {
     });
 
     it('should render children', () => {
-        const child = <MockChild/>
+        const child = <MockChild/>;
         const infScroll = TestUtils.renderIntoDocument(<InfScroll>{child}</InfScroll>);
         TestUtils.findRenderedComponentWithType(infScroll, MockChild).should.exist;
     });
